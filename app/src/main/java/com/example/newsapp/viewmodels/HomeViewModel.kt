@@ -68,7 +68,6 @@ class HomeViewModel : BaseViewModel<HomeViewModel.View>() {
     private fun mapperToDomain(news: List<ArticlesItem>?): List<News>? {
         return news?.map {
             News(
-                id = it.id!!,
                 title = it.title,
                 publishedAt = it.publishedAt,
                 author = it.author,
