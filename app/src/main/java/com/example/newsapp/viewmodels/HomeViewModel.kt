@@ -53,6 +53,9 @@ class HomeViewModel : BaseViewModel<HomeViewModel.View>(), CoroutineScope {
                             body()?.run {
                                 this.articles?.let {
                                     newsList.value = it
+                                    it.forEach {
+
+                                    }
                                 } ?: getView().onUpdateUser("Something went wrong")
                             } ?: getView().onUpdateUser("Something went wrong")
                         }
@@ -64,13 +67,6 @@ class HomeViewModel : BaseViewModel<HomeViewModel.View>(), CoroutineScope {
                     getView().onUpdateUser(t.message.toString())
                 }
             })
-    }
-
-
-    fun onSearchNews(query: String) {
-        if (query.length >= QUERY_THRESHOLD || query.isEmpty()) {
-            this.query.value = query.toLowerCase(Locale.getDefault()).trim()
-        }
     }
 
     interface View {

@@ -39,24 +39,6 @@ class HomeFragment : BaseFragment(), HomeViewModel.View, NewsAdapter.NoteItemCli
         }
         mainActivity.updateNavigationViewVisibility(true)
         onObserveNewsList()
-
-        //SearchView Icons tint
-        val searchIcon = searchViewHome.findViewById<ImageView>(R.id.search_mag_icon)
-        searchIcon.setColorFilter(Color.BLACK)
-        val cancelIcon = searchViewHome.findViewById<ImageView>(R.id.search_close_btn)
-        cancelIcon.setColorFilter(Color.BLACK)
-
-        //Initializing the searchView to filter teh data
-        searchViewHome.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean {
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String): Boolean {
-                homeViewModel.onSearchNews(newText)
-                return false
-            }
-        })
     }
 
     //once we get the data from repo, populate it with the help of the adapter, NewsAdapter()
