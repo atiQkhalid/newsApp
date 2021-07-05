@@ -26,12 +26,22 @@ class NewsRepository private constructor() : BaseRepository(), CoroutineScope {
     fun getNewsList() = newsDao?.getNews()
 
     fun saveNews(note: News) {
-        launch { saveNewsInDB(note) }
+        launch {
+            saveNewsInDB(note)
+        }
     }
 
     private suspend fun saveNewsInDB(note: News) {
         withContext(Dispatchers.IO) {
             newsDao?.setNews(note)
+        }
+    }
+
+    fun deleteAll() {
+        launch {
+            withContext(Dispatchers.IO) {
+                newsDao?.deleteAll()
+            }
         }
     }
 

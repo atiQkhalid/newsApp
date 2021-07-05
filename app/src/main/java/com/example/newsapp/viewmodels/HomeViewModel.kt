@@ -8,6 +8,7 @@ import com.example.newsapp.utils.Const.API_KEY
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.Collections.shuffle
 
 /**
  *  HomeViewModel.kt
@@ -26,9 +27,10 @@ class HomeViewModel : BaseViewModel<HomeViewModel.View>() {
                     response.run {
                         if (isSuccessful) {
                             body()?.run {
-                                mapperToDomain(this.articles)?.let { list ->
-                                    list.forEach {
-                                        newsRepository.saveNews(it)
+                                mapperToDomain(this.articles)?.let {
+                                    newsRepository.deleteAll()
+                                    it.forEach { news ->
+                                        newsRepository.saveNews(news)
                                     }
                                 } ?: getView().onUpdateUser("Something went wrong")
                             } ?: getView().onUpdateUser("Something went wrong")
@@ -45,8 +47,16 @@ class HomeViewModel : BaseViewModel<HomeViewModel.View>() {
 
     fun getNewsList(news: (List<ArticlesItem>?) -> Unit) {
         getView().showProgressBar()
-        news(domainToMapper(newsRepository.getNewsList()?.value))
-        getView().dismissProgressBar()
+        newsRepository.getNewsList()?.observe(getLifecycleOwner(), {
+            getView().dismissProgressBar()
+            if (it.isNotEmpty()) {
+                val newsList: MutableList<News> = ArrayList()
+                newsList.clear()
+                newsList.addAll(it)
+                shuffle(newsList)
+                news(domainToMapper(newsList))
+            }
+        })
     }
 
     private fun domainToMapper(news: List<News>?): List<ArticlesItem>? {

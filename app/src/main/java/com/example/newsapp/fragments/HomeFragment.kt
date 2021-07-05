@@ -32,6 +32,7 @@ class HomeFragment : BaseFragment(), HomeViewModel.View, NewsAdapter.NoteItemCli
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         homeViewModel.let {
             it.attachView(this)
+            it.attachObserver(this)
             it.getNewsArticles()
         }
 
@@ -40,10 +41,12 @@ class HomeFragment : BaseFragment(), HomeViewModel.View, NewsAdapter.NoteItemCli
         }
 
         // Configure the refreshing colors
-        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+        swipeContainer.setColorSchemeResources(
+            android.R.color.holo_blue_bright,
             android.R.color.holo_green_light,
             android.R.color.holo_orange_light,
-            android.R.color.holo_red_light)
+            android.R.color.holo_red_light
+        )
 
         newsAdapter = NewsAdapter(this).also {
             newsRecyclerView.apply {
@@ -56,6 +59,7 @@ class HomeFragment : BaseFragment(), HomeViewModel.View, NewsAdapter.NoteItemCli
 
     //once we get the data from repo, populate it with the help of the adapter, NewsAdapter()
     private fun getNewsData() {
+        if (swipeContainer.isRefreshing) swipeContainer.setRefreshing(false)
         homeViewModel.getNewsList {
             it?.let {
                 newsAdapter?.setItems(it)
