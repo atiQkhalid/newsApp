@@ -43,7 +43,6 @@ class HomeViewModel : BaseViewModel<HomeViewModel.View>() {
             })
     }
 
-
     fun getNewsList(news: (List<ArticlesItem>?) -> Unit) {
         getView().showProgressBar()
         news(domainToMapper(newsRepository.getNewsList()?.value))

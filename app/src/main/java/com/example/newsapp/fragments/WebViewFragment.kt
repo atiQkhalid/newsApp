@@ -26,7 +26,6 @@ class WebViewFragment(private val url: String) : BaseFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        mainActivity.updateNavigationViewVisibility(false)
         startWebView(url)
     }
 

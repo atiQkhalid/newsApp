@@ -33,9 +33,7 @@ class HomeFragment : BaseFragment(), HomeViewModel.View, NewsAdapter.NoteItemCli
         homeViewModel.let {
             it.attachView(this)
             it.getNewsArticles()
-            getNewsData()
         }
-        mainActivity.updateNavigationViewVisibility(true)
 
         swipeContainer.setOnRefreshListener {
             getNewsData()
@@ -53,6 +51,7 @@ class HomeFragment : BaseFragment(), HomeViewModel.View, NewsAdapter.NoteItemCli
                 adapter = it
             }
         }
+        getNewsData()
     }
 
     //once we get the data from repo, populate it with the help of the adapter, NewsAdapter()
@@ -81,7 +80,6 @@ class HomeFragment : BaseFragment(), HomeViewModel.View, NewsAdapter.NoteItemCli
 
     //On note item click listener
     override fun onItemClickListener(note: ArticlesItem) {
-        mainActivity.storeSelectedArticle(note)
-        replaceFragment(DetailsFragment())
+        replaceFragment(WebViewFragment(note.url!!))
     }
 }
