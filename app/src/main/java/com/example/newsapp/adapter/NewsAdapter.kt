@@ -13,7 +13,8 @@ import com.example.newsapp.utils.load
 
 /**
  * The NotesAdapter.kt to populate the recyclerview
- */
+ **/
+
 class NewsAdapter(
     private val noteItemClickListener: NoteItemClickListener
 ) : RecyclerView.Adapter<NewsAdapter.MyViewHolder>() {
