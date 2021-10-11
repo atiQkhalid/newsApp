@@ -73,12 +73,6 @@ fun Fragment.replaceFragment(
     transaction.commit()
 }
 
-
-/**
- * Extension function to pop back stack
- * @return void
- * @author Dawar Malik.
- */
 fun AppCompatActivity.backPress() {
     val fragmentManager: FragmentManager = this.supportFragmentManager
     if (fragmentManager.backStackEntryCount >= 1) {
